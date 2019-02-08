@@ -9,7 +9,7 @@
 
     <div id="speed-meter">
       <img id=meter-background src="speed_meter.jpg" alt="">
-      <img onclick="rotateImage()" id="meter-needle" transform="" src="meter_needle2.png" alt="">
+      <img id="meter-needle" transform="" src="meter_needle2.png" alt="">
     </div>
     <div id="start-button">
       <button type="button" name="button">Start<br>Engine</button>
@@ -19,13 +19,28 @@
   <script>
     var deg = 160;
     var needle = document.getElementById('meter-needle');
+    var accelerating = false;
     degStr = "rotate(" + deg + "deg)";
     needle.style.transform = degStr;
-    function rotateImage() {
+
+    needle.addEventListener("mousedown", function(accelerating){
+      accelerating = true;
+      while (accelerating){
+        degStr = "rotate(" + deg + "deg)";
+        needle.style.transform = degStr;
+        console.log(degStr);
+        deg = deg + 1;
+      }});
+
+      needle.addEventListener("mouseup", function(accelerating){
+        accelerating = false;
+    });
+
+    /*function rotateImage() {
         degStr = "rotate(" + deg + "deg)";
         needle.style.transform = degStr;
         console.log(degStr);
         deg = deg + 30;
-    }
+    }*/
 </script>
 </html>
