@@ -1,0 +1,32 @@
+body{
+  /*background-color:#211D1C;*/
+}
+
+#speed-meter{
+  position: relative;
+  display: block;/* ⇩ To extend this element to the width of speed_meter background */
+}
+
+#meter-background{
+  position: absolute;/* This element is placed based on its parent(#speed-meter)*/
+  left: 3px;
+  top: 0;
+}
+
+#meter-needle{
+  position: absolute;/* This element is placed based on its parent(#speed-meter)*/
+  left: 0;
+  top: 0;
+}
+
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
