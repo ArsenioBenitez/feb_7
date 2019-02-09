@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Fast & Tedious</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="speed-meter">
+      <img id=meter-background src="speed_meter.png" alt="">
+      <img id="meter-needle" src="meter_needle2.png" alt="">
+    </div>
+    <div id="control-panel">
+      <img id="rotation" src="tire.png" width="100px" height="100px">
+      <center><button type="button" id="accel-pedal" name="button">ACCEL<br>PEDAL</button></center>
+    </div>
+
+  </body>
+
+  <script>
+
+    var initial_deg = 0;
+    /*var max_degree = initial_deg + 290;*/
+    var max_degree = 290;
+    var needle = document.getElementById('meter-needle');
+    degStr = "rotate(" + initial_deg + "deg)";/*Degree string - This specifies the degree which the needle is moving toward.*/
+    needle.style.transform = degStr;/*Upon setting transform attribute, the needle moves to the degree specified by degStr*/
+
+    var accelPedal = document.getElementById("accel-pedal");
+
+    accelPedal.addEventListener("mousedown", function(){
+      accelerate();
+
+      });
+
+    accelPedal.addEventListener("mouseup", function(){
+      slowDown();
+      });
+
+    var accelerate = function(){
+        degStr = "rotate(" + max_degree + "deg)";
+        needle.style.transition = "10s"; /*acceleration speed*/
+        needle.style.transform = degStr;
+        /*Upon setting transform attribute, the needle moves to the degree specified by degStr*/
+        /*The speed at which the needle moves to degStr is specified by transition attribute*/
+    };
+
+    var slowDown = function(){
+      degStr = "rotate(" + initial_deg + "deg)";
+      needle.style.transition = "200s"/*Slow down speed*/
+      needle.style.transform = degStr;
+    };
+
+    /*Adjust tire speed*/
+    var adjustTireSpeed = function(){
+      var currentTransform = window.getComputedStyle(needle).transform;
+      var currentDegree = transformParserToDegree(currentTransform);
+      console.log(currentDegree);
+    }
+    setInterval(adjustTireSpeed, 1000);
+
+    /*Reference: https://css-tricks.com/get-value-of-css-rotation-through-javascript/*/
+    /*To extract the degree from transform attribute*/
+      var transformParserToDegree = function(trans){
+        
+    }
+
+</script>
+</html>
