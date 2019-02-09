@@ -15,7 +15,11 @@
       <img id="rotation" src="tire.png" width="100px" height="100px">
       <center><button type="button" id="accel-pedal" name="button">ACCEL<br>PEDAL</button>
       <button type="button" id="brake-pedal" name="button">BRAKE<br>PEDAL</button></center>
+      <audio id="sound1" src="honda.wav" preload="auto"></audio>
+      <audio id="sound2" src="alarm.wav" preload="auto"></audio>
+      <audio id="sound3" src="crash.wav" preload="auto"></audio>
     </div>
+
   </body>
 
   <script>
@@ -34,6 +38,8 @@
 
     accelPedal.addEventListener("mousedown", function(){
       accelerate();
+      document.getElementById("sound1").play();
+
 
       });
 
@@ -42,6 +48,8 @@
       });
     brakePedal.addEventListener("mousedown", function(){
         brake();
+        document.getElementById("sound2").play();
+        document.getElementById("sound3").play();
 
         });
 
@@ -53,6 +61,7 @@
         degStr = "rotate(" + max_degree + "deg)";
         needle.style.transition = "10s"; /*acceleration speed*/
         needle.style.transform = degStr;
+        brakePedal.style.visibility = "visible";
         /*Upon setting transform attribute, the needle moves to the degree specified by degStr*/
         /*The speed at which the needle moves to degStr is specified by transition attribute*/
     };

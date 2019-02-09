@@ -23,6 +23,9 @@ body{
 #crack{
   visibility:hidden;
 }
+#brake-pedal{
+  visibility:hidden;
+}
 
 #meter-needle{
   position: absolute;/* This element is placed based on its parent(#speed-meter)*/
