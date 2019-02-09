@@ -7,14 +7,15 @@
   </head>
   <body>
     <div id="speed-meter">
+      <img id="crack"  src="crack.png">
       <img id=meter-background src="speed_meter.png" alt="">
       <img id="meter-needle" src="meter_needle2.png" alt="">
     </div>
     <div id="control-panel">
       <img id="rotation" src="tire.png" width="100px" height="100px">
-      <center><button type="button" id="accel-pedal" name="button">ACCEL<br>PEDAL</button></center>
+      <center><button type="button" id="accel-pedal" name="button">ACCEL<br>PEDAL</button>
+      <button type="button" id="brake-pedal" name="button">BRAKE<br>PEDAL</button></center>
     </div>
-
   </body>
 
   <script>
@@ -27,6 +28,9 @@
     needle.style.transform = degStr;/*Upon setting transform attribute, the needle moves to the degree specified by degStr*/
 
     var accelPedal = document.getElementById("accel-pedal");
+    var brakePedal = document.getElementById("brake-pedal");
+    var crack = document.getElementById('crack');
+
 
     accelPedal.addEventListener("mousedown", function(){
       accelerate();
@@ -36,11 +40,30 @@
     accelPedal.addEventListener("mouseup", function(){
       slowDown();
       });
+    brakePedal.addEventListener("mousedown", function(){
+        brake();
+
+        });
+
+    /*brakePedal.addEventListener("mouseup", function(){
+        slowDown();
+      });*/
 
     var accelerate = function(){
         degStr = "rotate(" + max_degree + "deg)";
         needle.style.transition = "10s"; /*acceleration speed*/
         needle.style.transform = degStr;
+        /*Upon setting transform attribute, the needle moves to the degree specified by degStr*/
+        /*The speed at which the needle moves to degStr is specified by transition attribute*/
+    };
+    var brake = function(){
+        degStr = "rotate(" + initial_deg + "deg)";
+        console.log(degStr);
+        needle.style.transition = "1s"; /*acceleration speed*/
+        needle.style.transform = degStr;
+        var mssg = 'Warning: BREAKS FAILURE!!';
+        crack.style.visibility = "visible";
+        window.alert(mssg);
         /*Upon setting transform attribute, the needle moves to the degree specified by degStr*/
         /*The speed at which the needle moves to degStr is specified by transition attribute*/
     };
@@ -62,7 +85,7 @@
     /*Reference: https://css-tricks.com/get-value-of-css-rotation-through-javascript/*/
     /*To extract the degree from transform attribute*/
       var transformParserToDegree = function(trans){
-        
+
     }
 
 </script>

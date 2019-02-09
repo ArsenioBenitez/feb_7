@@ -18,6 +18,10 @@ body{
   right: 25%;
   top: 0;
   width: 50%;
+
+}
+#crack{
+  visibility:hidden;
 }
 
 #meter-needle{
