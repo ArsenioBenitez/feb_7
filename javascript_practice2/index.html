@@ -13,11 +13,14 @@
     </div>
     <div id="control-panel">
       <img id="rotation" src="tire.png" width="100px" height="100px">
-      <center><button type="button" id="accel-pedal" name="button">ACCEL<br>PEDAL</button>
-      <button type="button" id="brake-pedal" name="button">BRAKE<br>PEDAL</button></center>
-      <audio id="sound1" src="honda.wav" preload="auto"></audio>
-      <audio id="sound2" src="alarm.wav" preload="auto"></audio>
-      <audio id="sound3" src="crash.wav" preload="auto"></audio>
+      <center>
+        <button type="button" id="accel-pedal" name="button">ACCEL<br>PEDAL</button>
+        <button type="button" id="brake-pedal" name="button">BRAKE<br>PEDAL</button>
+        <button type="button" id="stop-sound" name="button">STOP<br>SOUND</button></center>
+      </center>
+      <audio id="sound-honda" src="honda.wav" preload="auto"></audio>
+      <audio id="sound-alarm" src="alarm.wav" preload="auto"></audio>
+      <audio id="sound-crash" src="crash.wav" preload="auto"></audio>
     </div>
 
   </body>
@@ -25,34 +28,45 @@
   <script>
 
     var initial_deg = 0;
-    /*var max_degree = initial_deg + 290;*/
     var max_degree = 290;
+
+    /*pictures*/
     var needle = document.getElementById('meter-needle');
     degStr = "rotate(" + initial_deg + "deg)";/*Degree string - This specifies the degree which the needle is moving toward.*/
     needle.style.transform = degStr;/*Upon setting transform attribute, the needle moves to the degree specified by degStr*/
-
-    var accelPedal = document.getElementById("accel-pedal");
-    var brakePedal = document.getElementById("brake-pedal");
     var crack = document.getElementById('crack');
 
+    /*HTML elements*/
+    var accelPedal = document.getElementById("accel-pedal");
+    var brakePedal = document.getElementById("brake-pedal");
+    var soundStopButton = document.getElementById("stop-sound");
+
+    /*Audio*/
+    var engineAudio = document.getElementById("sound-honda");
+    var alarmAudio = document.getElementById("sound-alarm");
+    var crashAudio = document.getElementById("sound-crash")
 
     accelPedal.addEventListener("mousedown", function(){
       accelerate();
-      document.getElementById("sound1").play();
-
-
+      engineAudio.play();
       });
 
     accelPedal.addEventListener("mouseup", function(){
       slowDown();
       });
+
     brakePedal.addEventListener("mousedown", function(){
         brake();
-        document.getElementById("sound2").play();
-        document.getElementById("sound3").play();
-
+        alarmAudio.play();
+        crashAudio.play();
         });
 
+    soundStopButton.addEventListener("click", function(){
+      crashAudio.pause();
+      crashAudio.currentTime = 0;
+      alarmAudio.pause();
+      alarmAudio.currentTime = 0;
+    });
     /*brakePedal.addEventListener("mouseup", function(){
         slowDown();
       });*/
