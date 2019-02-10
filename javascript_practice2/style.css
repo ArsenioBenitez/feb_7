@@ -1,5 +1,7 @@
 html{
   height: 100%;
+  padding-bottom: 50px;
+
 }
 
 body{
@@ -8,7 +10,13 @@ body{
   width: 100%;
 }
 
+#title-heading{
+  visibility: visible;
+
+}
+
 #speed-meter{
+  visibility: hidden;
   position: relative;
 }
 
@@ -20,10 +28,7 @@ body{
   width: 50%;
 
 }
-#crack{
-  visibility:hidden;
-}
-#brake-pedal{
+#crash-effect{
   visibility:hidden;
 }
 
@@ -39,10 +44,30 @@ body{
   position: fixed;
   width: 100%;
   height: 20%;
-  bottom: 0;
+  bottom: 20%;
+  padding-bottom: 50px; 
+  padding-bottom: 50px;
+}
+#engine-start{
+  visibility: visible;
 }
 
-#rotation{
+#control-buttons{
+  padding-top: 10%;
+}
+
+#driving-control{
+  visibility: hidden;
+}
+
+.wheel-stop{
+  position: absolute;
+  right: 20%;
+}
+
+.wheel-rotate{
+  position: absolute;
+  right: 20%;
   animation: rotate 1s linear infinite;
 }
 @keyframes rotate {

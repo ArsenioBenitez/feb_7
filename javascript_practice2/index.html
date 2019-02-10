@@ -6,17 +6,33 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <center><h1 id="title-heading"><font  size="18" color="white">Driving Simulator</font></h1></center>
     <div id="speed-meter">
-      <img id="crack"  src="crack.png">
+      <div id="crash-effect">
+        <img id="crack"  src="crack.png">
+        <img id="blood" src="blood.png">
+      </div>
       <img id=meter-background src="speed_meter.png" alt="">
       <img id="meter-needle" src="meter_needle2.png" alt="">
     </div>
     <div id="control-panel">
-      <img id="rotation" src="tire.png" width="100px" height="100px">
-      <center>
-        <button type="button" id="accel-pedal" name="button">ACCEL<br>PEDAL</button>
-        <button type="button" id="brake-pedal" name="button">BRAKE<br>PEDAL</button>
-        <button type="button" id="stop-sound" name="button">STOP<br>SOUND</button></center>
+      <img id="wheel" class="wheel-stop" src="tire.png" width="100px" height="100px">
+      <center id="control-buttons">
+        <div id="engine-start">
+          <button type="button" id="start-button" name="button">START<br>ENGINE</button>
+        </div>
+        <div id="driving-control">
+          <font size="5" color="white" id="instruction">Use buttons to accelerate & brake!</font><br>
+          <button type="button" id="stop-sound" name="button">STOP<br>SOUND</button>
+          <button type="button" id="drink" name="button">DRINK<br>ALCHOHOL</button>
+          &nbsp;&nbsp;&nbsp;
+          <button type="button" id="brake-pedal" name="button">BRAKE<br>PEDAL</button>
+          <button type="button" id="accel-pedal" name="button">ACCEL<br>PEDAL</button>
+          <p> </p>
+          <p> </p>
+
+        </center>
+        </div>
       </center>
       <audio id="sound-honda" src="honda.wav" preload="auto"></audio>
       <audio id="sound-alarm" src="alarm.wav" preload="auto"></audio>
@@ -29,22 +45,42 @@
 
     var initial_deg = 0;
     var max_degree = 290;
-
+    var brakeCount = 0;
+    var drunkenDriving = false;
     /*pictures*/
     var needle = document.getElementById('meter-needle');
     degStr = "rotate(" + initial_deg + "deg)";/*Degree string - This specifies the degree which the needle is moving toward.*/
     needle.style.transform = degStr;/*Upon setting transform attribute, the needle moves to the degree specified by degStr*/
-    var crack = document.getElementById('crack');
+    var crashEffect = document.getElementById('crash-effect');
 
     /*HTML elements*/
+    var titleHead = document.getElementById("title-heading");
+    var speedMeter = document.getElementById("speed-meter");
+
     var accelPedal = document.getElementById("accel-pedal");
     var brakePedal = document.getElementById("brake-pedal");
     var soundStopButton = document.getElementById("stop-sound");
-
+    var startButton = document.getElementById("engine-start");
+    var drinkButton = document.getElementById("drink");
+    var drivingControl = document.getElementById("driving-control");
+    var wheel = document.getElementById("wheel");
+    var instructionMessage = document.getElementById("instruction");
     /*Audio*/
     var engineAudio = document.getElementById("sound-honda");
     var alarmAudio = document.getElementById("sound-alarm");
-    var crashAudio = document.getElementById("sound-crash")
+    var crashAudio = document.getElementById("sound-crash");
+
+    drinkButton.addEventListener("click", function(){
+      drunkenDriving = true;
+    });
+
+    startButton.addEventListener("click", function(){
+      speedMeter.style.visibility = "visible";
+      startButton.style.visibility = "hidden";
+      drivingControl.style.visibility = "visible";
+      wheel.className = "wheel-rotate";
+      titleHead.remove();
+    })
 
     accelPedal.addEventListener("mousedown", function(){
       accelerate();
@@ -56,9 +92,16 @@
       });
 
     brakePedal.addEventListener("mousedown", function(){
+      if (!drunkenDriving){
         brake();
+        brakeCount += 1;
+      }
+      else{
+        falseBreak();
         alarmAudio.play();
         crashAudio.play();
+        crashEffect.style.visibility = "visible";
+      }
         });
 
     soundStopButton.addEventListener("click", function(){
@@ -67,29 +110,34 @@
       alarmAudio.pause();
       alarmAudio.currentTime = 0;
     });
-    /*brakePedal.addEventListener("mouseup", function(){
+
+    brakePedal.addEventListener("mouseup", function(){
         slowDown();
-      });*/
+      });
 
     var accelerate = function(){
         degStr = "rotate(" + max_degree + "deg)";
-        needle.style.transition = "10s"; /*acceleration speed*/
+        needle.style.transition = "20s"; /*acceleration speed*/
         needle.style.transform = degStr;
-        brakePedal.style.visibility = "visible";
         /*Upon setting transform attribute, the needle moves to the degree specified by degStr*/
         /*The speed at which the needle moves to degStr is specified by transition attribute*/
     };
     var brake = function(){
-        degStr = "rotate(" + initial_deg + "deg)";
-        console.log(degStr);
-        needle.style.transition = "1s"; /*acceleration speed*/
-        needle.style.transform = degStr;
-        var mssg = 'Warning: BREAKS FAILURE!!';
-        crack.style.visibility = "visible";
-        window.alert(mssg);
+      console.log("brake");
+      degStr = "rotate(" + 0.1 + "deg)";
+      needle.style.transition = "3s"/*Slow down speed*/
+      needle.style.transform = degStr;
         /*Upon setting transform attribute, the needle moves to the degree specified by degStr*/
         /*The speed at which the needle moves to degStr is specified by transition attribute*/
     };
+
+    var falseBreak = function(){
+      var mssg = 'Warning: BREAKS FAILURE!!';
+      window.alert(mssg);
+      wheel.className = "wheel-stop";
+      instructionMessage.innerText = "Don't drink and drive!!";
+      instructionMessage.size = 8;
+    }
 
     var slowDown = function(){
       degStr = "rotate(" + initial_deg + "deg)";
@@ -98,18 +146,14 @@
     };
 
     /*Adjust tire speed*/
-    var adjustTireSpeed = function(){
+    /*var adjustTireSpeed = function(){
       var currentTransform = window.getComputedStyle(needle).transform;
       var currentDegree = transformParserToDegree(currentTransform);
       console.log(currentDegree);
     }
     setInterval(adjustTireSpeed, 1000);
+    */
 
-    /*Reference: https://css-tricks.com/get-value-of-css-rotation-through-javascript/*/
-    /*To extract the degree from transform attribute*/
-      var transformParserToDegree = function(trans){
-
-    }
 
 </script>
 </html>
