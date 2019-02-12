@@ -37,15 +37,15 @@
       <audio id="sound-honda" src="honda.wav" preload="auto"></audio>
       <audio id="sound-alarm" src="alarm.wav" preload="auto"></audio>
       <audio id="sound-crash" src="crash.wav" preload="auto"></audio>
+      <audio id="car-start" src="car_start.wav" preload="auto"></audio>
     </div>
 
   </body>
 
   <script>
-
+    alert("This site has sound effects.")
     var initial_deg = 0;
     var max_degree = 290;
-    var brakeCount = 0;
     var drunkenDriving = false;
     /*pictures*/
     var needle = document.getElementById('meter-needle');
@@ -56,25 +56,28 @@
     /*HTML elements*/
     var titleHead = document.getElementById("title-heading");
     var speedMeter = document.getElementById("speed-meter");
-
+    var drivingControl = document.getElementById("driving-control");
+    var wheel = document.getElementById("wheel");
+    var instructionMessage = document.getElementById("instruction");
+    /*Buttons*/
     var accelPedal = document.getElementById("accel-pedal");
     var brakePedal = document.getElementById("brake-pedal");
     var soundStopButton = document.getElementById("stop-sound");
     var startButton = document.getElementById("engine-start");
     var drinkButton = document.getElementById("drink");
-    var drivingControl = document.getElementById("driving-control");
-    var wheel = document.getElementById("wheel");
-    var instructionMessage = document.getElementById("instruction");
     /*Audio*/
+    var startAudio = document.getElementById("car-start");
     var engineAudio = document.getElementById("sound-honda");
     var alarmAudio = document.getElementById("sound-alarm");
     var crashAudio = document.getElementById("sound-crash");
 
     drinkButton.addEventListener("click", function(){
       drunkenDriving = true;
+      drinkButton.style.color = "red";
     });
 
     startButton.addEventListener("click", function(){
+      startAudio.play();
       speedMeter.style.visibility = "visible";
       startButton.style.visibility = "hidden";
       drivingControl.style.visibility = "visible";
@@ -108,6 +111,8 @@
       crashAudio.pause();
       crashAudio.currentTime = 0;
       alarmAudio.pause();
+      alarmAudio.currentTime = 0;
+      engineAudio.pause();
       alarmAudio.currentTime = 0;
     });
 
